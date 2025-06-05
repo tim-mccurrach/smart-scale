@@ -172,7 +172,7 @@ class Wiiboard:
         buttonPressed = False
         buttonReleased = False
 
-        state = (int(buttonBytes[0].hex(), 16) << 8) | int(buttonBytes[1].hex(), 16)
+        state = (int.from_bytes(buttonBytes[0:1], byteorder='big') << 8) | int.from_bytes(buttonBytes[1:2], byteorder='big')
         if state == BUTTON_DOWN_MASK:
             buttonPressed = True
             if not self.buttonDown:
@@ -185,10 +185,10 @@ class Wiiboard:
                 self.buttonDown = False
                 print("Button released")
 
-        rawTR = (int(bytes[0].hex(), 16) << 8) + int(bytes[1].hex(), 16)
-        rawBR = (int(bytes[2].hex(), 16) << 8) + int(bytes[3].hex(), 16)
-        rawTL = (int(bytes[4].hex(), 16) << 8) + int(bytes[5].hex(), 16)
-        rawBL = (int(bytes[6].hex(), 16) << 8) + int(bytes[7].hex(), 16)
+        rawTR = (int.from_bytes(bytes[0:1], byteorder='big') << 8) + int.from_bytes(bytes[1:2], byteorder='big')
+        rawBR = (int.from_bytes(bytes[2:3], byteorder='big') << 8) + int.from_bytes(bytes[3:4], byteorder='big')
+        rawTL = (int.from_bytes(bytes[4:5], byteorder='big') << 8) + int.from_bytes(bytes[5:6], byteorder='big')
+        rawBL = (int.from_bytes(bytes[6:7], byteorder='big') << 8) + int.from_bytes(bytes[7:8], byteorder='big')
 
         topLeft = self.calcMass(rawTL, TOP_LEFT)
         topRight = self.calcMass(rawTR, TOP_RIGHT)
@@ -222,11 +222,11 @@ class Wiiboard:
         if len(bytes) == 16:
             for i in range(2):
                 for j in range(4):
-                    self.calibration[i][j] = (int(bytes[index].hex(), 16) << 8) + int(bytes[index + 1].hex(), 16)
+                    self.calibration[i][j] = (int.from_bytes(bytes[index:index+1], byteorder='big') << 8) + int.from_bytes(bytes[index+1:index+2], byteorder='big')
                     index += 2
         elif len(bytes) < 16:
             for i in range(4):
-                self.calibration[2][i] = (int(bytes[index].hex(), 16) << 8) + int(bytes[index + 1].hex(), 16)
+                self.calibration[2][i] = (int.from_bytes(bytes[index:index+1], byteorder='big') << 8) + int.from_bytes(bytes[index+1:index+2], byteorder='big')
                 index += 2
 
     # Send <data> to the Wiiboard

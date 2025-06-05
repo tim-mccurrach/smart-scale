@@ -122,14 +122,14 @@ class Wiiboard:
     def receive(self):
         while self.status == "Connected" and not self.processor.done:
             data = self.receivesocket.recv(25)
-            intype = int.from_bytes(data[1:2], byteorder='big')
-            print(intype)
+            intype = data[1]  # This will give us the raw byte value (0x32 = 50)
+            print(f"Message type: 0x{intype:02x}")  # Print in hex for debugging
             if intype == INPUT_STATUS:
                 # TODO: Status input received. It just tells us battery life really
                 self.setReportingType()
             elif intype == INPUT_READ_DATA:
                 if self.calibrationRequested:
-                    packetLength = (int.from_bytes(data[4:5], byteorder='big') // 16 + 1)
+                    packetLength = (data[4] // 16 + 1)
                     self.parseCalibrationResponse(data[7:(7 + packetLength)])
 
                     if packetLength < 16:

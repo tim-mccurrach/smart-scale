@@ -123,6 +123,7 @@ class Wiiboard:
         while self.status == "Connected" and not self.processor.done:
             data = self.receivesocket.recv(25)
             intype = int.from_bytes(data[1:2], byteorder='big')
+            print(intype)
             if intype == INPUT_STATUS:
                 # TODO: Status input received. It just tells us battery life really
                 self.setReportingType()

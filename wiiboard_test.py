@@ -235,8 +235,9 @@ class Wiiboard:
         if self.status != "Connected":
             return
         data[0] = "52"
+        stringified_data = [str(d) for d in data]
 
-        senddata = bytes.fromhex("".join(data))
+        senddata = bytes.fromhex("".join(stringified_data))
         self.controlsocket.send(senddata)
 
     #Turns the power button LED on if light is True, off if False

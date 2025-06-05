@@ -137,6 +137,7 @@ class Wiiboard:
                 self.processor.mass(self.createBoardEvent(data[2:12]))
             else:
                 print("ACK to data write received")
+                print(data)
 
     def disconnect(self):
         if self.status == "Connected":

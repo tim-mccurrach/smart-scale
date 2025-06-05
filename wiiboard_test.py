@@ -131,7 +131,8 @@ class Wiiboard:
                 self.setReportingType()
             elif intype == INPUT_READ_DATA:
                 if self.calibrationRequested:
-                    packetLength = (int(data[4].hex(), 16) // 16 + 1)
+                    packetLength = (int(str(data[4]).encode("hex"), 16) // 16 + 1)
+
                     self.parseCalibrationResponse(data[7:(7 + packetLength)])
 
                     if packetLength < 16:

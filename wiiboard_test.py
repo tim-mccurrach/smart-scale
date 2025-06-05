@@ -23,8 +23,8 @@ EXTENSION_8BYTES = 0x32
 BUTTON_DOWN_MASK = 0x8
 TOP_RIGHT = 0x0
 BOTTOM_RIGHT = 0x1
-TOP_LEFT = 0x2
-BOTTOM_LEFT = 0x3
+TOP_LEFT = 2
+BOTTOM_LEFT = 3
 BLUETOOTH_NAME = "Nintendo RVL-WBC-01"
 
 
@@ -260,7 +260,7 @@ class Wiiboard:
         self.calibrationRequested = True
 
     def setReportingType(self):
-        bytearr = ["00", COMMAND_REPORTING, CONTINUOUS_REPORTING, EXTENSION_8BYTES]
+        bytearr = ["00", str(COMMAND_REPORTING), str(CONTINUOUS_REPORTING), str(EXTENSION_8BYTES)]
         self.send(bytearr)
 
     def wait(self, millis):

@@ -252,7 +252,7 @@ class Wiiboard:
         self.LED = light
 
     def calibrate(self):
-        message = ["00", COMMAND_READ_REGISTER, "04", "A4", "00", "24", "00", "18"]
+        message = ["00", str(COMMAND_READ_REGISTER), "04", "A4", "00", "24", "00", "18"]
         self.send(message)
         self.calibrationRequested = True
 
